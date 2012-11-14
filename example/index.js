@@ -30,9 +30,13 @@ var term = pty.fork(process.env.SHELL || 'sh', [], {
 });
 
 term.on('data', function(data) {
-  return !socket
-    ? buff.push(data)
-    : socket.emit('data', data);
+  if (!sockets) {
+      buff.push(data);
+  } else {
+      for(i=0; i<sockets.length; i++) {
+         sockets[i].emit('data', data);
+      }
+  }
 });
 
 console.log(''
@@ -64,7 +68,7 @@ app.use(function(req, res, next) {
 app.use(express.static(__dirname));
 app.use(express.static(__dirname + '/../static'));
 
-server.listen(8080);
+server.listen(8123);
 
 /**
  * Sockets
@@ -76,18 +80,19 @@ io.configure(function() {
   io.disable('log');
 });
 
+sockets = []
 io.sockets.on('connection', function(sock) {
-  socket = sock;
+  sockets.push(sock);
 
-  socket.on('data', function(data) {
+  sock.on('data', function(data) {
     term.write(data);
   });
 
-  socket.on('disconnect', function() {
-    socket = null;
+  sock.on('disconnect', function() {
+    /* TODO */
   });
 
   while (buff.length) {
-    socket.emit('data', buff.shift());
+    sock.emit('data', buff.shift());
   }
 });

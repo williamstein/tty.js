@@ -318,6 +318,7 @@ Terminal.bindKeys = function() {
   }, true);
 
   on(document, 'keypress', function(ev) {
+    if (ev.metaKey) { return false ; } // allow copy/paste/etc. on OS X
     return Terminal.focus.keyPress(ev);
   }, true);
 };

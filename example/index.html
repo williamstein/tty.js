@@ -11,20 +11,17 @@
   }
 
   .terminal {
-    float: left;
-    border: #000 solid 5px;
-    font-family: "DejaVu Sans Mono", "Liberation Mono", monospace;
-    font-size: 11px;
-    color: #f0f0f0;
-    background: #000;
+     border: #fff solid 7px;
+     font-family: Courier, "Courier New", monospace;
+     font-size: 14px;
+     box-shadow: rgba(0, 0, 0, 0.8) 2px 2px 20px;
   }
 
-  .reverse-video {
+  .cursor {
     color: #000;
-    background: #f0f0f0;
+    background: #000;
   }
 </style>
-<h1>tty.js</h1>
 <script src="/socket.io/socket.io.js"></script>
 <script src="term.js"></script>
 <script>
@@ -48,6 +45,6 @@
         term.write(data);
       });
     });
-  }, 1000);
+  }, 100);
 }).call(this);
 </script>
