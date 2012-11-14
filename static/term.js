@@ -264,8 +264,8 @@ Terminal.colors = (function() {
 
 // Default BG/FG
 Terminal.defaultColors = {
-  bg: '#000000',
-  fg: '#f0f0f0'
+  bg: '#ffffff',
+  fg: '#000000'
 };
 
 Terminal.colors[256] = Terminal.defaultColors.bg;
@@ -277,7 +277,7 @@ Terminal.colors[257] = Terminal.defaultColors.fg;
 
 Terminal.termName = 'xterm';
 Terminal.geometry = [80, 24];
-Terminal.cursorBlink = true;
+Terminal.cursorBlink = false;
 Terminal.visualBell = false;
 Terminal.popOnBell = false;
 Terminal.scrollback = 1000;
@@ -313,6 +313,7 @@ Terminal.bindKeys = function() {
   // We could put an "if (Terminal.focus)" check
   // here, but it shouldn't be necessary.
   on(document, 'keydown', function(ev) {
+    if (ev.metaKey) { return false ; } // allow copy/paste/etc. on OS X
     return Terminal.focus.keyDown(ev);
   }, true);
 
@@ -814,7 +815,7 @@ Terminal.prototype.refresh = function(start, end) {
         }
         if (data !== this.defAttr) {
           if (data === -1) {
-            out += '<span class="reverse-video">';
+            out += '<span class="cursor">';
           } else {
             out += '<span style="';
 

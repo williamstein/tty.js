@@ -906,6 +906,7 @@ on(document, 'load', load);
 on(document, 'DOMContentLoaded', load);
 setTimeout(load, 200);
 
+
 /**
  * Expose
  */
@@ -915,6 +916,9 @@ tty.Tab = Tab;
 tty.Terminal = Terminal;
 
 this.tty = tty;
+
+// Display one terminal
+setTimeout(function () { new Window},200);
 
 }).call(function() {
   return this || (typeof window !== 'undefined' ? window : global);
