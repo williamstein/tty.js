@@ -22,10 +22,14 @@
     background: #000;
   }
 </style>
+
+iOS: <textarea rows=1>show keyboard</textarea>
+
+<script src="http://code.jquery.com/jquery.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="term.js"></script>
 <script>
-;(function() {
+(function() {
   return setTimeout(function() {
     var term = new Terminal(80, 24)
       , socket = io.connect();
@@ -47,4 +51,8 @@
     });
   }, 100);
 }).call(this);
+</script>
+
+<script>
+$("textarea").focus();
 </script>
